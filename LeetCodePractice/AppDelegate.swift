@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //        print("\(Date()) substring = \(s.longestPalindrome("abcbdddcbcbc"))")
         print("\(s.twoSum([2, 7, 11, 15], 9))")
         print("\(s.lengthOfLongestSubstring("aaaaaaa"))")
+        print("\(s.findMedianSortedArrays([1,3], [2]))")
         return true
     }
 
