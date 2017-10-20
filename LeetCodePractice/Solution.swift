@@ -165,6 +165,48 @@ class Solution: NSObject {
         let endIndex = s.index(s.startIndex, offsetBy: last)
         return String(s[startIndex..<endIndex])
     }
+    func longestPalindromeSecond(_ s: String) -> String {
+        var cur = preProcess(s)
+        var p = Array(repeatElement(0, count: cur.count))
+        var c = 0, r = 0
+        var arr = Array(cur.characters)
+        for i in 1..<cur.count-1 {
+            let i_mirror = 2 * c - i
+            p[i] = r > i ? min(r-i, p[i_mirror]):0
+            
+            while arr[i+1+p[i]] == arr[i-1-p[i]] {
+                p[i] += 1
+            }
+            if i+p[i] > r {
+                c = i
+                r = i + p[i]
+            }
+        }
+        var maxLen = 0
+        var centerIndex = 0
+        for i in 1..<cur.count-1 {
+            if p[i] > maxLen {
+                maxLen = p[i]
+                centerIndex = i
+            }
+        }
+        let startIndex = s.index(s.startIndex, offsetBy: (centerIndex - 1 - maxLen)/2)
+        let endIndex = s.index(startIndex, offsetBy: maxLen)
+        return String(s[startIndex..<endIndex])
+    }
+    func preProcess(_ s:String) -> String {
+        let count = s.count
+        var arr = Array(s.characters)
+        var ret = "^"
+        if count == 0 {
+            return "^$"
+        }
+        for i in 0..<count {
+            ret += "#" + arr[i].description
+        }
+        ret += "#$"
+        return ret
+    }
     
 }
 

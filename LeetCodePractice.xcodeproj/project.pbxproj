@@ -84,8 +84,8 @@
 				5289F6351F8F4B74006CC208 /* Solution.swift */,
 				5289F6191F8F4B5F006CC208 /* Main.storyboard */,
 				5289F61C1F8F4B5F006CC208 /* Assets.xcassets */,
-				5289F61E1F8F4B5F006CC208 /* LaunchScreen.storyboard */,
 				5289F6211F8F4B5F006CC208 /* Info.plist */,
+				5289F61E1F8F4B5F006CC208 /* LaunchScreen.storyboard */,
 			);
 			path = LeetCodePractice;
 			sourceTree = "<group>";
