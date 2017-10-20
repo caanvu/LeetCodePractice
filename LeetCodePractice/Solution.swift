@@ -98,45 +98,72 @@ class Solution: NSObject {
         }
         return 0.0
     }
-//    func longestPalindromeFirst(_ s: String) -> String {
-//        var reverseString = Array(s.reversed())
-//        var sArray = Array(s.characters)
-//        var i = 0 , j = 0
-//        for (i,ch1) in sArray.enumerated() {
-//            for (j,ch2) in reverseString.enumerated() {
-//                if ch1 == ch2 {
-//
-//                }
-//            }
-//        }
-//    }
+    func longestPalindromeFirst(_ s: String) -> String {
+        var reverseString = Array(s.reversed())
+        var sArray = Array(s.characters)
+        let count = sArray.count
+        var resultStart = 0
+        var resultEnd = 0
+        var lenght = 0
+        var le:[[Int16]] = Array(repeatElement(Array(repeatElement(0, count: count)), count: count))
+        for  i in 0..<count {
+            for  j in 0..<count {
+                if sArray[i] == reverseString[j] {
+                    if i == 0 || j == 0 {
+                        le[i][j] = 1
+                    } else {
+                        le[i][j] = le[i-1][j-1] + 1
+                    }
+                    if le[i][j] >= lenght {
+                        lenght = Int(le[i][j])
+                        //判断 是否为回文字符串的逆序
+                        if (j - lenght + 1 + i) == count - 1{
+                            resultStart = i - lenght + 1
+                            resultEnd = i
+                        }
+                    }
+                }else {
+                    le[i][j] = 0
+                }
+            }
+        }
+        let startIndex = s.index(s.startIndex, offsetBy: resultStart)
+        let endIndex = s.index(s.startIndex, offsetBy: resultEnd+1)
+        return String(s[startIndex..<endIndex])
+    }
     func longestPalindrome(_ s: String) -> String {
         let count = s.lengthOfBytes(using: .ascii)
+        var fir = 0
+        var last = 1
+        let arr = Array(s.characters)
         if count <= 1 {
             return s
         }
         var le:[[Bool]] = Array(repeatElement(Array(repeatElement(false, count: count)), count: count))
-        for i in 0...count-1 {
+        for i in 0..<count {
             le[i][i] = true
         }
-        
-        var fir = 0
-        var last = 0
-        let arr = Array(s.characters)
-        for k in 2...count {
+        for i in 0..<count-1 {
+            if arr[i] == arr[i+1] {
+                le[i][i+1] = true
+                fir = i
+                last = i + 2
+            }
+        }
+        for k in 3..<count+1 {
             var j = 0
-            for i in 0...count-k {
-                 j = k + i
+            for i in 0..<count-k+1 {
+                j = k + i - 1
                 if arr[i] == arr[j] && le[i+1][j-1] {
                     le[i][j] = true
                     fir = i
-                    last = j
+                    last = j + 1
                 }
             }
         }
         let startIndex = s.index(s.startIndex, offsetBy: fir)
-        let endIndex = s.index(s.startIndex, offsetBy: last + 1)
-        return s.substring(with: startIndex..<endIndex)
+        let endIndex = s.index(s.startIndex, offsetBy: last)
+        return String(s[startIndex..<endIndex])
     }
     
 }
