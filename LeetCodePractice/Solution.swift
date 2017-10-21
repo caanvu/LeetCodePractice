@@ -9,7 +9,7 @@
 import UIKit
 
 class Solution: NSObject {
-    
+    //MARK:1.Two Sum
     func twoSum(_ nums:[Int],_ target: Int ) -> [Int] {
         var dic = [Int:Int]()
         for (index,num) in nums.enumerated() {
@@ -21,7 +21,7 @@ class Solution: NSObject {
         }
         return []
     }
-    
+    //MARK:2.Add Two Numbers
     func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
         let headListNode = ListNode(0)
         var node = headListNode
@@ -43,7 +43,7 @@ class Solution: NSObject {
         }
         return headListNode.next
     }
-    
+    //MARK:3.Longest Substring Without Repeating Characters
     func lengthOfLongestSubstring(_ s: String) -> Int {
         var dic = [Character:Int]()
         var start = 0
@@ -59,7 +59,7 @@ class Solution: NSObject {
         }
         return lenght
     }
-    
+    //MARK: 4.Median of Two Sorted Arrays
     func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
         if nums1.count > nums2.count {
             return self.findMedianSortedArrays(nums2,nums1)
@@ -98,6 +98,7 @@ class Solution: NSObject {
         }
         return 0.0
     }
+    //MARK: 5.Longest Palindromic Substring
     func longestPalindromeFirst(_ s: String) -> String {
         var reverseString = Array(s.reversed())
         var sArray = Array(s.characters)
@@ -207,7 +208,106 @@ class Solution: NSObject {
         ret += "#$"
         return ret
     }
+    //MARK:6.ZigZag Conversion
+    func convert(_ s: String, _ numRows: Int) -> String {
+        if numRows <= 1 {
+            return s
+        }
+        let arr = Array(s.characters)
+        var ret = ""
+        let interval = numRows * 2 - 2
+        for i in 0..<numRows {
+            var first = interval
+            var second = interval
+            var j = i
+            var current = second
+            if i != 0 , i != numRows-1 {
+                first = interval - 2 * i
+                second = 2 * i
+            }
+            while j < arr.count {
+                ret += arr[j].description
+                if current == first {
+                    j += second
+                    current = second
+                }else {
+                    j += first
+                    current = first
+                }
+            }
+        }
+        return ret
+    }
+    //MARK:7.Reverse Integer
+    func reverse(_ x: Int) -> Int {
+        var reverseNum = 0
+        var tem = x
+        while tem != 0{
+            reverseNum += tem % 10
+            tem /= 10
+            if tem != 0 {
+                reverseNum *= 10
+            }
+        }
+        if reverseNum > (Int)(Int32.max) || reverseNum < (Int)(Int32.min) {
+            return 0
+        }
+        return reverseNum
+    }
+    func myAtoi(_ str: String) -> Int {
+        var arr = Array(removeSpace(str))
+        var result:Int32 = 0
+        var flag:Int32 = 1
+        var count = arr.count
+        if arr.count > 0 {
+            if arr[0] == "+" {
+                flag = 1
+                arr.removeFirst()
+                count -= 1
+            }else if arr[0] == "-" {
+                flag = -1
+                arr.removeFirst()
+                count -= 1
+            }
+        }
+        var once = true
+        for i in 0..<count {
+            if once,result > 0 {
+                result *= flag
+                once = false
+            }
+            if let num = Int32(arr[i].description) {
+                let n = num * flag
+                let left = result &* 10 &+ n
+                if  result == 0 || (((left >= 0 && result >= 0 ) || (left < 0 && result < 0)) && left/10 == result)   {
+                    result *= 10
+                    result += n
+                }else {
+                    if flag == 1 {
+                        return Int(Int32.max)
+                    } else {
+                        return Int(Int32.min)
+                    }
+                }
+            }else {
+                break
+            }
+        }
+        return Int(result)
+    }
     
+    func removeSpace(_ str: String) -> String {
+        var s = str
+        if str.first == " " {
+            s.removeFirst()
+            return removeSpace(s)
+        }else if str.last == " " {
+            s.removeLast()
+            return removeSpace(s)
+        } else {
+            return s
+        }
+    }
 }
 
 
